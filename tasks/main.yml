@@ -17,6 +17,15 @@
     - ca-certificates
     - oracle-java8-set-default
 
+- name: Symlink Default Java
+  file: src=/usr/lib/jvm/java-8-oracle dest=/usr/lib/jvm/default-java state=link 
+
+- name: Set JAVA_HOME
+  lineinfile: dest=/etc/environment
+              regexp=''
+              insertafter=EOF
+              line="JAVA_HOME=/usr/lib/jvm/default-java"
+
 - name: Verify Java Version
   action: shell /usr/bin/java -version
   register: java
@@ -26,10 +35,4 @@
 
 - assert: 
     that: 
-      - "'java version' in java.stderr" 
-
-- name: Set JAVA_HOME
-  lineinfile: dest=/etc/environment
-              regexp=''
-              insertafter=EOF
-              line="JAVA_HOME=/usr/lib/jvm/java-8-oracle"
+      - "'java version' in java.stderr"

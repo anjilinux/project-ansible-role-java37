@@ -28,10 +28,8 @@
     that: 
       - "'java version' in java.stderr" 
 
-- name: Set JAVA_HOME Globally
-  template:
-    src: java.sh.j2
-    dest: "/etc/profile.d/java.sh"
-    owner: 0
-    group: 0
-    mode: 0755
+- name: Set JAVA_HOME
+  lineinfile: dest=/etc/environment
+              regexp=''
+              insertafter=EOF
+              line="JAVA_HOME=/usr/lib/jvm/java-8-oracle"

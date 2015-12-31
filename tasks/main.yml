@@ -27,3 +27,11 @@
 - assert: 
     that: 
       - "'java version' in java.stderr" 
+
+- name: Set JAVA_HOME Globally
+  template:
+    src: java.sh.j2
+    dest: "/etc/profile.d/java.sh"
+    owner: 0
+    group: 0
+    mode: 0755
